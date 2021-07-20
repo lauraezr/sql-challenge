@@ -72,10 +72,20 @@ AND hire_date <= '1986-01-31';
 -- 3. List the manager of each department with the following information: 
 -- department number, department name, the manager's employee number, 
 -- last name, first name.
+-- SELECT dept_manager.dept_no, dept_manager.emp_no, employees.last_name, employees.first_name
+-- FROM dept_manager
+-- LEFT JOIN employees
+-- ON employees.emp_no = dept_manager.emp_no;
+
+-- SELECT title_id
+-- FROM titles
+-- WHERE title = 'Manager';
+
 SELECT dept_manager.dept_no, dept_manager.emp_no, employees.last_name, employees.first_name
-FROM dept_manager
-LEFT JOIN employees
-ON employees.emp_no = dept_manager.emp_no;
+FROM employees
+JOIN titles ON titles.title_id = employees.emp_title_id
+JOIN dept_manager ON dept_manager.emp_no = employees.emp_no
+WHERE title = 'Manager';
 
 
 -- 4. List the department of each employee with the following information: 
