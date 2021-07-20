@@ -1,0 +1,267 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.12
+-- Dumped by pg_dump version 12.6
+
+-- Started on 2021-07-20 00:07:02 PDT
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 196 (class 1259 OID 16695)
+-- Name: departments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.departments (
+    dept_no character varying(45) NOT NULL,
+    dept_name character varying(45) NOT NULL
+);
+
+
+ALTER TABLE public.departments OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 16698)
+-- Name: dept_emp; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dept_emp (
+    emp_no integer NOT NULL,
+    dept_no character varying(45) NOT NULL
+);
+
+
+ALTER TABLE public.dept_emp OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16701)
+-- Name: dept_manager; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dept_manager (
+    dept_no character varying(45) NOT NULL,
+    emp_no integer NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.dept_manager OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16745)
+-- Name: dept_manager_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.dept_manager_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dept_manager_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3164 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: dept_manager_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.dept_manager_id_seq OWNED BY public.dept_manager.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 16704)
+-- Name: employees; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employees (
+    emp_no integer NOT NULL,
+    emp_title_id character varying(45) NOT NULL,
+    birth_date date NOT NULL,
+    first_name character varying(45) NOT NULL,
+    last_name character varying(45) NOT NULL,
+    sex character varying(45) NOT NULL,
+    hire_date date NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.employees OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16717)
+-- Name: employees_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employees_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employees_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3165 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: employees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.employees_id_seq OWNED BY public.employees.id;
+
+
+--
+-- TOC entry 200 (class 1259 OID 16707)
+-- Name: salaries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.salaries (
+    emp_no integer NOT NULL,
+    salary integer NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.salaries OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16726)
+-- Name: salaries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.salaries_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.salaries_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3166 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: salaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.salaries_id_seq OWNED BY public.salaries.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 16710)
+-- Name: titles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.titles (
+    title_id character varying(45) NOT NULL,
+    title character varying(45) NOT NULL
+);
+
+
+ALTER TABLE public.titles OWNER TO postgres;
+
+--
+-- TOC entry 3026 (class 2604 OID 16747)
+-- Name: dept_manager id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dept_manager ALTER COLUMN id SET DEFAULT nextval('public.dept_manager_id_seq'::regclass);
+
+
+--
+-- TOC entry 3027 (class 2604 OID 16719)
+-- Name: employees id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employees ALTER COLUMN id SET DEFAULT nextval('public.employees_id_seq'::regclass);
+
+
+--
+-- TOC entry 3028 (class 2604 OID 16728)
+-- Name: salaries id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salaries ALTER COLUMN id SET DEFAULT nextval('public.salaries_id_seq'::regclass);
+
+
+--
+-- TOC entry 3030 (class 2606 OID 16749)
+-- Name: dept_manager dept_manager_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dept_manager
+    ADD CONSTRAINT dept_manager_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3032 (class 2606 OID 16721)
+-- Name: employees employees_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employees
+    ADD CONSTRAINT employees_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3034 (class 2606 OID 16730)
+-- Name: salaries salaries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salaries
+    ADD CONSTRAINT salaries_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3035 (class 2606 OID 16754)
+-- Name: dept_manager dept_manager_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dept_manager
+    ADD CONSTRAINT dept_manager_id_fkey FOREIGN KEY (id) REFERENCES public.employees(id);
+
+
+--
+-- TOC entry 3036 (class 2606 OID 16735)
+-- Name: salaries salaries_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salaries
+    ADD CONSTRAINT salaries_id_fkey FOREIGN KEY (id) REFERENCES public.employees(id);
+
+
+--
+-- TOC entry 3037 (class 2606 OID 16740)
+-- Name: salaries salaries_id_fkey1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salaries
+    ADD CONSTRAINT salaries_id_fkey1 FOREIGN KEY (id) REFERENCES public.employees(id);
+
+
+-- Completed on 2021-07-20 00:07:02 PDT
+
+--
+-- PostgreSQL database dump complete
+--
+
